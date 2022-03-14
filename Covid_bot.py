@@ -7,6 +7,8 @@ from vk_api.utils import get_random_id
 from vk_api.keyboard import VkKeyboard
 
 
+#  функция для парсинга данных со страницы Яндекс
+#  используется только для Москвы и Санкт-Петербурга
 def get_statistics_yandex(region):
     url = "https://yandex.ru/maps/covid19?ll=41.775580%2C54.894027&z=3"
     headers = {
@@ -20,6 +22,8 @@ def get_statistics_yandex(region):
     return {"region": region, "new_cases": new_cases, "count_cases": count_cases}
 
 
+#  функция для парсинга данных со страницы Google
+#  используется для всех регионов, кроме Москвы и Санкт-Петербурга
 def get_statistics_google(region):
     url = "https://www.google.com/search?q=%D0%A1%D1%82%D0%B0%D1%82%D0%B8%D1%81%D1%82%D0%B8%D0%BA%D0%B0+%D0%BA%D0%BE%D0%B2%D0%B8%D0%B4+19+%D1%80%D0%BE%D1%81%D1%81%D0%B8%D1%8F&sxsrf=AOaemvJGYry9y48m1adb8n1juYvKjRH9GA%3A1640791540060&ei=9H3MYaKSA42WrwSKmZCgAg&ved=0ahUKEwii3JTnqIn1AhUNy4sKHYoMBCQQ4dUDCA4&uact=5&oq=%D0%A1%D1%82%D0%B0%D1%82%D0%B8%D1%81%D1%82%D0%B8%D0%BA%D0%B0+%D0%BA%D0%BE%D0%B2%D0%B8%D0%B4+19+%D1%80%D0%BE%D1%81%D1%81%D0%B8%D1%8F&gs_lcp=Cgdnd3Mtd2l6EAMyBQgAEMsBMgYIABAWEB4yBggAEBYQHjIGCAAQFhAeMgYIABAWEB4yBggAEBYQHjIGCAAQFhAeMgYIABAWEB4yBggAEBYQHjoECCMQJzoKCC4QxwEQowIQJzoGCCMQJxATOgUIABCABDoKCAAQgAQQhwIQFDoFCC4QgARKBAhBGABKBAhGGABQAFjrKGCGKmgAcAJ4AoAB0ASIAaEYkgEKMTkuNS4xLjUtMZgBAKABAcABAQ&sclient=gws-wiz"
     headers = {
@@ -45,7 +49,7 @@ def main():
     keyboard = VkKeyboard(one_time=False)
     keyboard.add_location_button()
     token = "*Your token*"
-    dadata = Dadata(token)
+    dadata = Dadata(token)  # объект dadata нужен для преобразования координат в название региона
     while True:
         chats = vk.messages.getConversations(offset=0, filter="unread")
         for chat in chats["items"]:
