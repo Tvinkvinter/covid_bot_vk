@@ -44,7 +44,7 @@ def main():
     vk = vk_session.get_api()
     keyboard = VkKeyboard(one_time=False)
     keyboard.add_location_button()
-    token = "faf1983c0358b631d6030f071fee65241fe26f9d"
+    token = "*Your token*"
     dadata = Dadata(token)
     while True:
         chats = vk.messages.getConversations(offset=0, filter="unread")
